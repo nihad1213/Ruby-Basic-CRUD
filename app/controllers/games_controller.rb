@@ -1,4 +1,3 @@
-# controllers/games_controller.rb
 require_relative '../models/game'
 
 class GamesController
@@ -8,8 +7,10 @@ class GamesController
     
     if game.save
       puts "Game '#{title}' added successfully!"
+      return true
     else
       puts "Failed to add game '#{title}'."
+      return false
     end
   end
 
@@ -27,12 +28,12 @@ class GamesController
 
   # Update a game by ID
   def self.update_game(id, title:, genre:, release_date:, rating:)
-    game = Game.find(id)
-    if game
-      game.update(title: title, genre: genre, release_date: release_date, rating: rating)
-      puts "Game '#{game.title}' updated successfully!"
+    if Game.update(id: id, title: title, genre: genre, release_date: release_date, rating: rating)
+      puts "Game updated successfully!"
+      return true
     else
-      puts "Game with ID #{id} not found."
+      puts "Game with ID #{id} not found or update failed."
+      return false
     end
   end
 
@@ -40,10 +41,16 @@ class GamesController
   def self.delete_game(id)
     game = Game.find(id)
     if game
-      game.destroy
-      puts "Game '#{game.title}' deleted successfully!"
+      if game.destroy
+        puts "Game '#{game.title}' deleted successfully!"
+        return true
+      else
+        puts "Failed to delete game."
+        return false
+      end
     else
       puts "Game with ID #{id} not found."
+      return false
     end
   end
 end
