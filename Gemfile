@@ -3,5 +3,7 @@
 source 'https://rubygems.org'
 
 gem 'mysql2'
+gem 'dotenv'
 
-# bundlle install for downloading gems
+
+# bundle install for downloading gems
